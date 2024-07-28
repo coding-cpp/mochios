@@ -33,4 +33,8 @@ target_include_directories(mochios
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/lib/logger/include>
     $<INSTALL_INTERFACE:lib/brewtils/include>
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/lib/brewtils/include>
+    $<INSTALL_INTERFACE:lib/brewtils/include>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/lib/nexus/include>
+    $<INSTALL_INTERFACE:lib/brewtils/include>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/lib/json/include>
 )
