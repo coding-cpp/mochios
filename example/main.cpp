@@ -7,8 +7,8 @@ int main(int argc, char **argv) {
 
   mochios::Client client(connection);
   client.interceptors.request.push_back([](mochios::message::Request &request) {
-    // logger::info("Intercepting request!");
-    // request.print();
+    logger::info("Intercepting request!");
+    request.print();
   });
   mochios::message::Response response;
 
