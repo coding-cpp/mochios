@@ -6,6 +6,10 @@ int main(int argc, char **argv) {
   connection.port = 80;
 
   mochios::Client client(connection);
+  client.interceptors.request.push_back([](mochios::message::Request &request) {
+    // logger::info("Intercepting request!");
+    // request.print();
+  });
   mochios::message::Response response;
 
   mochios::message::Request healthRequest("/health");

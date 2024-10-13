@@ -17,6 +17,8 @@ mochios::Client::Client(const mochios::client::Connection &connection)
 
   this->connect();
   close(this->socket);
+
+  this->interceptors.request.push_back(mochios::interceptor::userAgent);
   return;
 }
 
@@ -30,37 +32,44 @@ mochios::Client::~Client() {
 
 mochios::message::Response
 mochios::Client::get(mochios::message::Request &request) {
-  return this->sendHelper(request, mochios::enums::method::GET);
+  request.method = mochios::enums::method::GET;
+  return this->sendHelper(request);
 }
 
 mochios::message::Response
 mochios::Client::post(mochios::message::Request &request) {
-  return this->sendHelper(request, mochios::enums::method::POST);
+  request.method = mochios::enums::method::POST;
+  return this->sendHelper(request);
 }
 
 mochios::message::Response
 mochios::Client::put(mochios::message::Request &request) {
-  return this->sendHelper(request, mochios::enums::method::PUT);
+  request.method = mochios::enums::method::PUT;
+  return this->sendHelper(request);
 }
 
 mochios::message::Response
 mochios::Client::patch(mochios::message::Request &request) {
-  return this->sendHelper(request, mochios::enums::method::PATCH);
+  request.method = mochios::enums::method::PATCH;
+  return this->sendHelper(request);
 }
 
 mochios::message::Response
 mochios::Client::del(mochios::message::Request &request) {
-  return this->sendHelper(request, mochios::enums::method::DELETE);
+  request.method = mochios::enums::method::DELETE;
+  return this->sendHelper(request);
 }
 
 mochios::message::Response
 mochios::Client::options(mochios::message::Request &request) {
-  return this->sendHelper(request, mochios::enums::method::OPTIONS);
+  request.method = mochios::enums::method::OPTIONS;
+  return this->sendHelper(request);
 }
 
 mochios::message::Response
 mochios::Client::head(mochios::message::Request &request) {
-  return this->sendHelper(request, mochios::enums::method::HEAD);
+  request.method = mochios::enums::method::HEAD;
+  return this->sendHelper(request);
 }
 
 void mochios::Client::connect() {
@@ -83,11 +92,20 @@ void mochios::Client::connect() {
 }
 
 mochios::message::Response
-mochios::Client::sendHelper(mochios::message::Request &request,
-                            const mochios::enums::method &method) {
-  this->connect();
+mochios::Client::sendHelper(mochios::message::Request &request) {
   request.set("Host", this->connection.host);
   request.set("Accept", "*/*");
   request.set("Connection", "close");
-  return mochios::helpers::send(request, method, this->socket);
+  for (const std::function<void(mochios::message::Request &)>
+           &requestIntercptor : this->interceptors.request) {
+    requestIntercptor(request);
+  }
+  this->connect();
+  mochios::message::Response res =
+      mochios::helpers::send(request, this->socket);
+  for (const std::function<void(mochios::message::Response &)>
+           &responseInterceptor : this->interceptors.response) {
+    responseInterceptor(res);
+  }
+  return res;
 }

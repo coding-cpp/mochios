@@ -7,9 +7,8 @@
 #include <logger/log.h>
 
 #include <mochios/client/options.h>
-#include <mochios/enums/method.h>
-#include <mochios/message/request.h>
-#include <mochios/message/response.h>
+#include <mochios/interceptors/interceptor.h>
+#include <mochios/interceptors/user_agent.h>
 
 namespace mochios {
 
@@ -21,12 +20,13 @@ private:
   mochios::client::Connection connection;
 
   void connect();
-  mochios::message::Response sendHelper(mochios::message::Request &request,
-                                        const mochios::enums::method &method);
+  mochios::message::Response sendHelper(mochios::message::Request &request);
 
 public:
   Client(const mochios::client::Connection &connection);
   ~Client();
+
+  mochios::interceptor::Interceptors interceptors;
 
   mochios::message::Response get(mochios::message::Request &request);
   mochios::message::Response post(mochios::message::Request &request);

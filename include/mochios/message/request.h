@@ -1,5 +1,6 @@
 #pragma once
 
+#include <mochios/enums/method.h>
 #include <mochios/message/message.h>
 
 namespace mochios {
@@ -13,6 +14,7 @@ public:
   ~Request();
 
   std::string path;
+  mochios::enums::method method;
 
   void print() override;
 };

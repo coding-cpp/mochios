@@ -15,14 +15,12 @@ namespace mochios {
 namespace helpers {
 
 std::pair<std::string, std::string>
-buildRequest(mochios::message::Request &request,
-             const mochios::enums::method &method);
+buildRequest(mochios::message::Request &request);
 
 void buildResponse(mochios::message::Response &res,
                    std::stringstream &response);
 
 mochios::message::Response send(mochios::message::Request &request,
-                                const mochios::enums::method &method,
                                 const int &socket);
 
 } // namespace helpers

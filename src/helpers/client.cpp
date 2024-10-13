@@ -1,10 +1,9 @@
 #include <mochios/helpers/client.h>
 
 std::pair<std::string, std::string>
-mochios::helpers::buildRequest(mochios::message::Request &request,
-                               const mochios::enums::method &method) {
+mochios::helpers::buildRequest(mochios::message::Request &request) {
   std::ostringstream oss;
-  oss << method << " " << request.path;
+  oss << request.method << " " << request.path;
   if (request.queries.size() > 0) {
     oss << "?";
     bool isFirst = true;
@@ -21,9 +20,9 @@ mochios::helpers::buildRequest(mochios::message::Request &request,
   oss << " HTTP/1.1\r\n";
 
   std::string jsonifiedBody = "";
-  if (method == mochios::enums::method::POST ||
-      method == mochios::enums::method::PUT ||
-      method == mochios::enums::method::PATCH) {
+  if (request.method == mochios::enums::method::POST ||
+      request.method == mochios::enums::method::PUT ||
+      request.method == mochios::enums::method::PATCH) {
     jsonifiedBody = request.body.dumps(0);
     request.set("Content-Type", "application/json");
     request.set("Content-Length", std::to_string(jsonifiedBody.size()));
@@ -62,11 +61,9 @@ void mochios::helpers::buildResponse(mochios::message::Response &res,
 }
 
 mochios::message::Response
-mochios::helpers::send(mochios::message::Request &request,
-                       const mochios::enums::method &method,
-                       const int &socket) {
+mochios::helpers::send(mochios::message::Request &request, const int &socket) {
   std::pair<std::string, std::string> requestString =
-      mochios::helpers::buildRequest(request, method);
+      mochios::helpers::buildRequest(request);
   if (brewtils::sys::send(socket, requestString.first.c_str(),
                           requestString.first.size(), 0) < 0) {
     logger::error("Error sending request headers",

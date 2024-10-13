@@ -9,6 +9,7 @@ mochios::message::Request::~Request() { return; }
 void mochios::message::Request::print() {
   logger::debug("Request:");
   logger::debug("  path: " + this->path);
+  logger::debug("  method: " + this->method);
   logger::debug("  headers:");
   for (const std::pair<std::string, std::string> &header : this->headers) {
     logger::debug("    " + header.first + ": " + header.second);
