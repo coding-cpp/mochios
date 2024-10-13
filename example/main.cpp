@@ -1,15 +1,21 @@
-#include <mochios/client.h>
+#include <mochios/client/client.h>
 
 int main(int argc, char **argv) {
-  mochios::Client client("api.nasa.gov", 443);
-  mochios::Request request;
-  request.path = "/planetary/apod";
-  request.queries["api_key"] = "DEMO_KEY";
+  mochios::client::Connection connection;
+  connection.host = "expresso.aditjain.me";
+  connection.port = 80;
 
-  mochios::Response response;
-  client.get(request, response);
+  mochios::Client client(connection);
+  mochios::message::Response response;
 
-  std::cout << response.body.dumps(2) << std::endl;
+  mochios::message::Request healthRequest("/health");
+  response = client.get(healthRequest);
+  logger::success(response.body);
+
+  json::parser parser;
+  mochios::message::Request request("/about");
+  response = client.get(request);
+  logger::success(parser.loads(response.body).dumps(2));
 
   return EXIT_SUCCESS;
 }
