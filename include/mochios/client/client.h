@@ -8,7 +8,8 @@
 
 #include <mochios/client/options.h>
 #include <mochios/interceptors/interceptor.h>
-#include <mochios/interceptors/user_agent.h>
+#include <mochios/interceptors/request/user_agent.h>
+#include <mochios/interceptors/response/json.h>
 
 namespace mochios {
 

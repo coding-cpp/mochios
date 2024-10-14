@@ -56,6 +56,7 @@ void mochios::helpers::buildResponse(mochios::message::Response &res,
   while (std::getline(response, line) && line != "\r") {
     body << line;
   }
+
   res.body = body.str();
   return;
 }

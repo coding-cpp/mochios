@@ -18,7 +18,8 @@ mochios::Client::Client(const mochios::client::Connection &connection)
   this->connect();
   close(this->socket);
 
-  this->interceptors.request.push_back(mochios::interceptor::userAgent);
+  this->interceptors.request.use(mochios::interceptor::request::userAgent);
+  this->interceptors.response.use(mochios::interceptor::response::json);
   return;
 }
 
@@ -97,14 +98,14 @@ mochios::Client::sendHelper(mochios::message::Request &request) {
   request.set("Accept", "*/*");
   request.set("Connection", "close");
   for (const std::function<void(mochios::message::Request &)>
-           &requestIntercptor : this->interceptors.request) {
-    requestIntercptor(request);
+           &requestInterceptor : this->interceptors.request.interceptors) {
+    requestInterceptor(request);
   }
   this->connect();
   mochios::message::Response res =
       mochios::helpers::send(request, this->socket);
   for (const std::function<void(mochios::message::Response &)>
-           &responseInterceptor : this->interceptors.response) {
+           &responseInterceptor : this->interceptors.response.interceptors) {
     responseInterceptor(res);
   }
   return res;

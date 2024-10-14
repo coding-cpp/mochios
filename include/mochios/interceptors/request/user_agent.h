@@ -7,7 +7,11 @@ namespace mochios {
 
 namespace interceptor {
 
+namespace request {
+
 void userAgent(mochios::message::Request &request);
+
+} // namespace request
 
 } // namespace interceptor
 

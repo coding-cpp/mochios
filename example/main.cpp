@@ -6,7 +6,7 @@ int main(int argc, char **argv) {
   connection.port = 80;
 
   mochios::Client client(connection);
-  client.interceptors.request.push_back([](mochios::message::Request &request) {
+  client.interceptors.request.use([](mochios::message::Request &request) {
     logger::info("Intercepting request!");
     request.print();
   });
@@ -16,10 +16,9 @@ int main(int argc, char **argv) {
   response = client.get(healthRequest);
   logger::success(response.body);
 
-  json::parser parser;
   mochios::message::Request request("/about");
   response = client.get(request);
-  logger::success(parser.loads(response.body).dumps(2));
+  logger::success(response.body.dumps(2));
 
   return EXIT_SUCCESS;
 }
