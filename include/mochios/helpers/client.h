@@ -2,6 +2,7 @@
 
 #include <cstring>
 #include <sstream>
+#include <unistd.h>
 
 #include <brewtils/sys.h>
 #include <brewtils/url.h>
