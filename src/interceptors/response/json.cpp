@@ -1,7 +1,7 @@
 #include <mochios/interceptors/response/json.h>
 
 void mochios::interceptor::response::json(
-    mochios::message::Response &response) {
+    mochios::messages::Response &response) {
   if (response.get("content-type") != "application/json") {
     return;
   }

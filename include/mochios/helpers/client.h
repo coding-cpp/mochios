@@ -8,20 +8,20 @@
 #include <brewtils/url.h>
 
 #include <mochios/enums/method.h>
-#include <mochios/message/request.h>
-#include <mochios/message/response.h>
+#include <mochios/messages/request.h>
+#include <mochios/messages/response.h>
 
 namespace mochios {
 
 namespace helpers {
 
 std::pair<std::string, std::string>
-buildRequest(mochios::message::Request &request);
+buildRequest(mochios::messages::Request &request);
 
-void buildResponse(mochios::message::Response &res,
+void buildResponse(mochios::messages::Response &res,
                    std::stringstream &response);
 
-mochios::message::Response send(mochios::message::Request &request,
+mochios::messages::Response send(mochios::messages::Request &request,
                                 const int &socket);
 
 } // namespace helpers

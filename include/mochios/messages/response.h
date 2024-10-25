@@ -1,10 +1,10 @@
 #pragma once
 
-#include <mochios/message/message.h>
+#include <mochios/messages/message.h>
 
 namespace mochios {
 
-namespace message {
+namespace messages {
 
 class Response : public Message {
 private:
@@ -18,6 +18,6 @@ public:
   void print() override;
 };
 
-} // namespace message
+} // namespace messages
 
 } // namespace mochios

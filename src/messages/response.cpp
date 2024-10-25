@@ -1,15 +1,14 @@
-#include <mochios/message/request.h>
+#include <mochios/messages/response.h>
 
-mochios::message::Request::Request(const std::string &path) : path(path) {
-  return;
-}
+mochios::messages::Response::Response() { return; }
 
-mochios::message::Request::~Request() { return; }
+mochios::messages::Response::~Response() { return; }
 
-void mochios::message::Request::print() {
-  logger::debug("Request:");
-  logger::debug("  path: " + this->path);
-  logger::debug("  method: " + this->method);
+void mochios::messages::Response::print() {
+  logger::debug("Response:");
+  logger::debug("  status: " + std::to_string(this->status));
+  logger::debug("  statusText: " + this->statusText);
+
   logger::debug("  headers:");
   for (const std::pair<std::string, std::string> &header : this->headers) {
     logger::debug("    " + header.first + ": " + header.second);
