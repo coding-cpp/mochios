@@ -15,10 +15,9 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      - name: Clone submodules
-        run: |
-          git submodule init
-          git submodule update
+        with:
+          submodules: recursive
+          fetch-depth: 1
       - name: Update and Install dependencies
         run: |
           sudo apt-get update
