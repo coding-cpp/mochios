@@ -15,6 +15,8 @@ namespace mochios {
 
 namespace helpers {
 
+namespace client {
+
 std::pair<std::string, std::string>
 buildRequest(mochios::messages::Request &request);
 
@@ -22,7 +24,9 @@ void buildResponse(mochios::messages::Response &res,
                    std::stringstream &response);
 
 mochios::messages::Response send(mochios::messages::Request &request,
-                                const int &socket);
+                                 const int &socket);
+
+} // namespace client
 
 } // namespace helpers
 

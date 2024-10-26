@@ -1,7 +1,7 @@
 #include <mochios/helpers/client.h>
 
 std::pair<std::string, std::string>
-mochios::helpers::buildRequest(mochios::messages::Request &request) {
+mochios::helpers::client::buildRequest(mochios::messages::Request &request) {
   std::ostringstream oss;
   oss << request.method << " " << request.path;
   if (request.queries.size() > 0) {
@@ -35,8 +35,8 @@ mochios::helpers::buildRequest(mochios::messages::Request &request) {
   return std::make_pair(oss.str(), jsonifiedBody);
 }
 
-void mochios::helpers::buildResponse(mochios::messages::Response &res,
-                                     std::stringstream &response) {
+void mochios::helpers::client::buildResponse(mochios::messages::Response &res,
+                                             std::stringstream &response) {
   std::string line;
 
   // Headers
@@ -69,15 +69,17 @@ void mochios::helpers::buildResponse(mochios::messages::Response &res,
 }
 
 mochios::messages::Response
-mochios::helpers::send(mochios::messages::Request &request, const int &socket) {
+mochios::helpers::client::send(mochios::messages::Request &request,
+                               const int &socket) {
   std::pair<std::string, std::string> requestString =
-      mochios::helpers::buildRequest(request);
+      mochios::helpers::client::buildRequest(request);
   if (brewtils::sys::send(socket, requestString.first.c_str(),
                           requestString.first.size(), 0) < 0) {
-    logger::error("Error sending request headers",
-                  "mochios::messages::Response "
-                  "mochios::helpers::send(mochios::messages::Request &request, "
-                  "const mochios::enums::method &method, const int &socket)");
+    logger::error(
+        "Error sending request headers",
+        "mochios::messages::Response "
+        "mochios::helpers::client::send(mochios::messages::Request &request, "
+        "const mochios::enums::method &method, const int &socket)");
   }
   if (requestString.second.size() > 0) {
     if (brewtils::sys::send(socket, requestString.second.c_str(),
@@ -85,7 +87,7 @@ mochios::helpers::send(mochios::messages::Request &request, const int &socket) {
       logger::error(
           "Error sending request body",
           "mochios::messages::Response "
-          "mochios::helpers::send(mochios::messages::Request &request, "
+          "mochios::helpers::client::send(mochios::messages::Request &request, "
           "const mochios::enums::method &method, const int &socket)");
     }
   }
@@ -108,6 +110,6 @@ mochios::helpers::send(mochios::messages::Request &request, const int &socket) {
     res.statusText = parts[2];
   }
 
-  mochios::helpers::buildResponse(res, oss);
+  mochios::helpers::client::buildResponse(res, oss);
   return res;
 }
