@@ -3,6 +3,8 @@
 #include <brewtils/string.h>
 #include <json/parse.h>
 
+#include <mochios/messages/cookie.h>
+
 namespace mochios {
 
 namespace messages {
@@ -19,6 +21,7 @@ public:
   std::map<std::string, std::string> headers;
   std::map<std::string, std::string> params;
   std::map<std::string, std::string> queries;
+  std::vector<mochios::messages::Cookie *> cookies;
   json::object body;
 
   void set(const std::string &key, const std::string &value);

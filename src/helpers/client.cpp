@@ -46,8 +46,15 @@ void mochios::helpers::buildResponse(mochios::messages::Response &res,
       continue;
     }
 
-    std::string key = line.substr(0, separator);
+    std::string key = brewtils::string::lower(line.substr(0, separator));
     std::string value = line.substr(separator + 2, line.size() - separator - 3);
+    if (key == "set-cookie") {
+      mochios::messages::Cookie *newCookie =
+          new mochios::messages::Cookie(value);
+      res.cookies.push_back(newCookie);
+      continue;
+    }
+
     res.set(key, value);
   }
 
