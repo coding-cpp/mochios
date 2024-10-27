@@ -110,7 +110,7 @@ mochios::Client::sendHelper(mochios::messages::Request &request) {
   }
   this->connect();
   mochios::messages::Response res =
-      mochios::helpers::send(request, this->socket);
+      mochios::helpers::client::send(request, this->socket);
   for (const std::function<void(mochios::messages::Response &)>
            &responseInterceptor :
        this->internalInterceptors.response.interceptors) {
