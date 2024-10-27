@@ -24,6 +24,11 @@ void mochios::messages::Response::print() {
     logger::debug("    " + query.first + ": " + query.second);
   }
 
+  logger::debug("  cookies:");
+  for (mochios::messages::Cookie *cookie : this->cookies) {
+    logger::debug("    " + cookie->serialize());
+  }
+
   logger::debug("  body:");
   logger::debug("    " + this->body.dumps(2, 2));
   return;

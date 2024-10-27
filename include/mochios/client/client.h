@@ -8,6 +8,7 @@
 
 #include <mochios/client/options.h>
 #include <mochios/interceptors/interceptor.h>
+#include <mochios/interceptors/request/cookie.h>
 #include <mochios/interceptors/request/user_agent.h>
 #include <mochios/interceptors/response/json.h>
 
@@ -19,6 +20,7 @@ private:
   struct addrinfo *server;
 
   mochios::client::Connection connection;
+  mochios::interceptor::Interceptors internalInterceptors;
 
   void connect();
   mochios::messages::Response sendHelper(mochios::messages::Request &request);
