@@ -3,6 +3,6 @@
 const std::string mochiosUserAgent = "mochios/" + mochios::version;
 
 void mochios::interceptor::request::userAgent(
-    mochios::message::Request &request) {
+    mochios::messages::Request &request) {
   request.set("User-Agent", mochiosUserAgent);
 }

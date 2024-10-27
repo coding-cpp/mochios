@@ -2,8 +2,8 @@
 
 #include <functional>
 
-#include <mochios/message/request.h>
-#include <mochios/message/response.h>
+#include <mochios/messages/request.h>
+#include <mochios/messages/response.h>
 
 namespace mochios {
 
@@ -30,8 +30,8 @@ public:
 };
 
 typedef struct {
-  mochios::interceptor::Manager<mochios::message::Request> request;
-  mochios::interceptor::Manager<mochios::message::Response> response;
+  mochios::interceptor::Manager<mochios::messages::Request> request;
+  mochios::interceptor::Manager<mochios::messages::Response> response;
 } Interceptors;
 
 } // namespace interceptor

@@ -1,11 +1,11 @@
 #pragma once
 
 #include <mochios/enums/method.h>
-#include <mochios/message/message.h>
+#include <mochios/messages/message.h>
 
 namespace mochios {
 
-namespace message {
+namespace messages {
 
 class Request : public Message {
 private:
@@ -19,6 +19,6 @@ public:
   void print() override;
 };
 
-} // namespace message
+} // namespace messages
 
 } // namespace mochios

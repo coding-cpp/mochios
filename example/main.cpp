@@ -6,17 +6,17 @@ int main(int argc, char **argv) {
   connection.port = 80;
 
   mochios::Client client(connection);
-  client.interceptors.request.use([](mochios::message::Request &request) {
+  client.interceptors.request.use([](mochios::messages::Request &request) {
     logger::info("Intercepting request!");
     request.print();
   });
-  mochios::message::Response response;
+  mochios::messages::Response response;
 
-  mochios::message::Request healthRequest("/health");
+  mochios::messages::Request healthRequest("/health");
   response = client.get(healthRequest);
   logger::success(response.body);
 
-  mochios::message::Request request("/about");
+  mochios::messages::Request request("/about");
   response = client.get(request);
   logger::success(response.body.dumps(2));
 

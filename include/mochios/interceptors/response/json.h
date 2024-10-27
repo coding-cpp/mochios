@@ -2,7 +2,7 @@
 
 #include <json/parse.h>
 
-#include <mochios/message/response.h>
+#include <mochios/messages/response.h>
 
 namespace mochios {
 
@@ -10,7 +10,7 @@ namespace interceptor {
 
 namespace response {
 
-void json(mochios::message::Response &response);
+void json(mochios::messages::Response &response);
 
 } // namespace response
 

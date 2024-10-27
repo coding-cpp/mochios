@@ -31,44 +31,44 @@ mochios::Client::~Client() {
   return;
 }
 
-mochios::message::Response
-mochios::Client::get(mochios::message::Request &request) {
+mochios::messages::Response
+mochios::Client::get(mochios::messages::Request &request) {
   request.method = mochios::enums::method::GET;
   return this->sendHelper(request);
 }
 
-mochios::message::Response
-mochios::Client::post(mochios::message::Request &request) {
+mochios::messages::Response
+mochios::Client::post(mochios::messages::Request &request) {
   request.method = mochios::enums::method::POST;
   return this->sendHelper(request);
 }
 
-mochios::message::Response
-mochios::Client::put(mochios::message::Request &request) {
+mochios::messages::Response
+mochios::Client::put(mochios::messages::Request &request) {
   request.method = mochios::enums::method::PUT;
   return this->sendHelper(request);
 }
 
-mochios::message::Response
-mochios::Client::patch(mochios::message::Request &request) {
+mochios::messages::Response
+mochios::Client::patch(mochios::messages::Request &request) {
   request.method = mochios::enums::method::PATCH;
   return this->sendHelper(request);
 }
 
-mochios::message::Response
-mochios::Client::del(mochios::message::Request &request) {
+mochios::messages::Response
+mochios::Client::del(mochios::messages::Request &request) {
   request.method = mochios::enums::method::DELETE;
   return this->sendHelper(request);
 }
 
-mochios::message::Response
-mochios::Client::options(mochios::message::Request &request) {
+mochios::messages::Response
+mochios::Client::options(mochios::messages::Request &request) {
   request.method = mochios::enums::method::OPTIONS;
   return this->sendHelper(request);
 }
 
-mochios::message::Response
-mochios::Client::head(mochios::message::Request &request) {
+mochios::messages::Response
+mochios::Client::head(mochios::messages::Request &request) {
   request.method = mochios::enums::method::HEAD;
   return this->sendHelper(request);
 }
@@ -92,19 +92,19 @@ void mochios::Client::connect() {
   }
 }
 
-mochios::message::Response
-mochios::Client::sendHelper(mochios::message::Request &request) {
+mochios::messages::Response
+mochios::Client::sendHelper(mochios::messages::Request &request) {
   request.set("Host", this->connection.host);
   request.set("Accept", "*/*");
   request.set("Connection", "close");
-  for (const std::function<void(mochios::message::Request &)>
+  for (const std::function<void(mochios::messages::Request &)>
            &requestInterceptor : this->interceptors.request.interceptors) {
     requestInterceptor(request);
   }
   this->connect();
-  mochios::message::Response res =
+  mochios::messages::Response res =
       mochios::helpers::send(request, this->socket);
-  for (const std::function<void(mochios::message::Response &)>
+  for (const std::function<void(mochios::messages::Response &)>
            &responseInterceptor : this->interceptors.response.interceptors) {
     responseInterceptor(res);
   }

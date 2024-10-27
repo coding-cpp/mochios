@@ -5,7 +5,7 @@
 
 namespace mochios {
 
-namespace message {
+namespace messages {
 
 class Message {
 private:
@@ -27,6 +27,6 @@ public:
   virtual void print() = 0;
 };
 
-} // namespace message
+} // namespace messages
 
 } // namespace mochios

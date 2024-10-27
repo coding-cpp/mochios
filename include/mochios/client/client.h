@@ -21,7 +21,7 @@ private:
   mochios::client::Connection connection;
 
   void connect();
-  mochios::message::Response sendHelper(mochios::message::Request &request);
+  mochios::messages::Response sendHelper(mochios::messages::Request &request);
 
 public:
   Client(const mochios::client::Connection &connection);
@@ -29,13 +29,13 @@ public:
 
   mochios::interceptor::Interceptors interceptors;
 
-  mochios::message::Response get(mochios::message::Request &request);
-  mochios::message::Response post(mochios::message::Request &request);
-  mochios::message::Response put(mochios::message::Request &request);
-  mochios::message::Response patch(mochios::message::Request &request);
-  mochios::message::Response del(mochios::message::Request &request);
-  mochios::message::Response options(mochios::message::Request &request);
-  mochios::message::Response head(mochios::message::Request &request);
+  mochios::messages::Response get(mochios::messages::Request &request);
+  mochios::messages::Response post(mochios::messages::Request &request);
+  mochios::messages::Response put(mochios::messages::Request &request);
+  mochios::messages::Response patch(mochios::messages::Request &request);
+  mochios::messages::Response del(mochios::messages::Request &request);
+  mochios::messages::Response options(mochios::messages::Request &request);
+  mochios::messages::Response head(mochios::messages::Request &request);
 };
 
 } // namespace mochios
