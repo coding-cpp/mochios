@@ -12,7 +12,7 @@ public:
   Response();
   ~Response();
 
-  int status;
+  int statusCode;
   std::string statusText;
 
   void print() override;

@@ -105,7 +105,7 @@ mochios::helpers::client::send(mochios::messages::Request &request,
   std::string line;
   std::getline(oss, line);
   std::vector<std::string> parts = brewtils::string::split(line, " ");
-  res.status = std::stoi(parts[1]);
+  res.statusCode = std::stoi(parts[1]);
   if (parts.size() > 2) {
     res.statusText = parts[2];
   }
