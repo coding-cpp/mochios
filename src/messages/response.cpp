@@ -6,7 +6,7 @@ mochios::messages::Response::~Response() { return; }
 
 void mochios::messages::Response::print() {
   logger::debug("Response:");
-  logger::debug("  status: " + std::to_string(this->status));
+  logger::debug("  statusCode: " + std::to_string(this->statusCode));
   logger::debug("  statusText: " + this->statusText);
 
   logger::debug("  headers:");
