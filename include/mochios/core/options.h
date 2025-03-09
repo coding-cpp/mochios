@@ -4,13 +4,13 @@
 
 namespace mochios {
 
-namespace client {
+namespace core {
 
 typedef struct {
   std::string host;
   unsigned short port;
 } Connection;
 
-} // namespace client
+} // namespace core
 
 } // namespace mochios

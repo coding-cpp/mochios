@@ -7,7 +7,11 @@
 
 namespace mochios {
 
+namespace core {
+
 class Client;
+
+} // namespace core
 
 namespace interceptor {
 
@@ -26,7 +30,7 @@ public:
     interceptors.push_back(interceptor);
   }
 
-  friend class mochios::Client;
+  friend class mochios::core::Client;
 };
 
 typedef struct {

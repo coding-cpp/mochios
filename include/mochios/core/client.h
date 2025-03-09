@@ -6,7 +6,7 @@
 #include <brewtils/sys.h>
 #include <logger/log.h>
 
-#include <mochios/client/options.h>
+#include <mochios/core/options.h>
 #include <mochios/interceptors/interceptor.h>
 #include <mochios/interceptors/request/cookie.h>
 #include <mochios/interceptors/request/user_agent.h>
@@ -14,19 +14,21 @@
 
 namespace mochios {
 
+namespace core {
+
 class Client {
 private:
   int socket;
   struct addrinfo *server;
 
-  mochios::client::Connection connection;
+  mochios::core::Connection connection;
   mochios::interceptor::Interceptors internalInterceptors;
 
   void connect();
   mochios::messages::Response sendHelper(mochios::messages::Request &request);
 
 public:
-  Client(const mochios::client::Connection &connection);
+  Client(const mochios::core::Connection &connection);
   ~Client();
 
   mochios::interceptor::Interceptors interceptors;
@@ -39,5 +41,7 @@ public:
   mochios::messages::Response options(mochios::messages::Request &request);
   mochios::messages::Response head(mochios::messages::Request &request);
 };
+
+} // namespace core
 
 } // namespace mochios

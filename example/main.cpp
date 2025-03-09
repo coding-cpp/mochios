@@ -1,11 +1,11 @@
-#include <mochios/client/client.h>
+#include <mochios/core/client.h>
 
 int main(int argc, char **argv) {
-  mochios::client::Connection connection;
+  mochios::core::Connection connection;
   connection.host = "expresso.aditjain.me";
   connection.port = 80;
 
-  mochios::Client client(connection);
+  mochios::core::Client client(connection);
   client.interceptors.request.use([](mochios::messages::Request &request) {
     logger::info("Intercepting request!");
     request.print();
