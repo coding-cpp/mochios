@@ -84,14 +84,61 @@ void mochios::Client::connect() {
     logger::error("Failed to create socket", "void mochios::Client::connect()");
   }
 
-  if (::connect(this->socket, this->server->ai_addr, this->server->ai_addrlen) <
-      0) {
+  int flags = fcntl(this->socket, F_GETFL, 0);
+  fcntl(this->socket, F_SETFL, flags | O_NONBLOCK);
+
+  int result =
+      ::connect(this->socket, this->server->ai_addr, this->server->ai_addrlen);
+  if (result < 0 && errno != EINPROGRESS) {
     freeaddrinfo(this->server);
     close(this->socket);
     this->socket = -1;
     logger::error("Failed to connect to server at " + connection.host,
                   "void mochios::Client::connect()");
+    return;
   }
+
+  if (result != 0) {
+    fd_set writefds;
+    FD_ZERO(&writefds);
+    FD_SET(this->socket, &writefds);
+
+    struct timeval timeout {};
+    timeout.tv_sec = this->connection.timeout;
+    timeout.tv_usec = 0;
+
+    int sel = select(this->socket + 1, nullptr, &writefds, nullptr, &timeout);
+    if (sel <= 0) {
+      close(this->socket);
+      this->socket = -1;
+      freeaddrinfo(this->server);
+      logger::error("Connection timed out", "mochios::Client::connect()");
+      return;
+    }
+
+    int so_error;
+    socklen_t len = sizeof(so_error);
+    getsockopt(this->socket, SOL_SOCKET, SO_ERROR, &so_error, &len);
+    if (so_error != 0) {
+      close(this->socket);
+      this->socket = -1;
+      freeaddrinfo(this->server);
+      logger::error("Connection failed: " + std::to_string(so_error),
+                    "mochios::Client::connect()");
+      return;
+    }
+  }
+
+  fcntl(this->socket, F_SETFL, flags);
+
+  struct timeval timeout;
+  timeout.tv_sec = this->connection.timeout;
+  timeout.tv_usec = 0;
+  setsockopt(this->socket, SOL_SOCKET, SO_RCVTIMEO, &timeout, sizeof(timeout));
+
+  timeout.tv_sec = this->connection.timeout;
+  timeout.tv_usec = 0;
+  setsockopt(this->socket, SOL_SOCKET, SO_SNDTIMEO, &timeout, sizeof(timeout));
 }
 
 mochios::messages::Response

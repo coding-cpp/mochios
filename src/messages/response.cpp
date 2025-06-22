@@ -4,7 +4,7 @@ mochios::messages::Response::Response() { return; }
 
 mochios::messages::Response::~Response() { return; }
 
-void mochios::messages::Response::print() {
+const void mochios::messages::Response::print() const {
   logger::debug("Response:");
   logger::debug("  statusCode: " + std::to_string(this->statusCode));
   logger::debug("  statusText: " + this->statusText);

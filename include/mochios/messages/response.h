@@ -15,7 +15,7 @@ public:
   int statusCode;
   std::string statusText;
 
-  void print() override;
+  const void print() const override;
 };
 
 } // namespace messages

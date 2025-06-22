@@ -23,6 +23,8 @@ buildRequest(mochios::messages::Request &request);
 void buildResponse(mochios::messages::Response &res,
                    std::stringstream &response);
 
+void buildDefaultResponse(mochios::messages::Response &res, int statusCode);
+
 mochios::messages::Response send(mochios::messages::Request &request,
                                  const int &socket);
 
