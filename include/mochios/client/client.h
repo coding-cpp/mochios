@@ -1,6 +1,7 @@
 #pragma once
 
 #include <cstring>
+#include <fcntl.h>
 #include <netdb.h>
 
 #include <brewtils/sys.h>

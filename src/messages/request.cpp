@@ -6,7 +6,7 @@ mochios::messages::Request::Request(const std::string &path) : path(path) {
 
 mochios::messages::Request::~Request() { return; }
 
-void mochios::messages::Request::print() {
+const void mochios::messages::Request::print() const {
   logger::debug("Request:");
   logger::debug("  path: " + this->path);
   logger::debug("  method: " + this->method);

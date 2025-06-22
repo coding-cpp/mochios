@@ -16,7 +16,7 @@ public:
   std::string path;
   mochios::enums::method method;
 
-  void print() override;
+  const void print() const override;
 };
 
 } // namespace messages

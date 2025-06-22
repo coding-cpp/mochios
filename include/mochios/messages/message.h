@@ -27,7 +27,7 @@ public:
   void set(const std::string &key, const std::string &value);
   const std::string get(const std::string &key) const;
 
-  virtual void print() = 0;
+  virtual const void print() const = 0;
 };
 
 } // namespace messages
