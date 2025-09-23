@@ -6,11 +6,11 @@ namespace mochios {
 
 namespace client {
 
-typedef struct {
+struct Connection {
   std::string host;
   unsigned short port;
   unsigned int timeout = 2;
-} Connection;
+};
 
 } // namespace client
 
